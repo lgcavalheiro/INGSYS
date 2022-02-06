@@ -1,0 +1,47 @@
+.Navbar {
+  background-color: var(--lavender);
+  color: var(--nickel);
+  width: 100%;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  overflow: hidden;
+  max-height: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expanded {
+  max-height: 100%;
+  padding: 2px;
+}
+
+.NavbarButton {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  color: var(--nickel);
+  background-color: var(--lavender);
+  margin: 0;
+  border-radius: 0 0 16px 16px;
+}
+
+.NavbarButton::before {
+  content: "\25bc";
+}
+
+.expandedButton {
+  top: 143px;
+}
+
+.ButtonContainer {
+    display: grid;
+    align-content: center;
+    text-align: center;
+  }
+  
+  .Button {
+    width: 256px;
+    max-width: 256px;
+  }
