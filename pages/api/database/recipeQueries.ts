@@ -1,19 +1,11 @@
 import { Timestamp } from "mongodb";
 import { close, connect } from "./connector";
+import { IIngredient } from "./ingredientQueries";
 
 export interface IRecipe {
   _id: string;
   name: string;
   ingredients: Array<IRecipeIngredient>;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-}
-
-// TODO: eventually move this to some other more appropriate place?
-interface IIngredient {
-  _id: string;
-  name: string;
-  type: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
