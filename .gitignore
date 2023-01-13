@@ -1,6 +1,6 @@
-.next/
 node_modules/
 mongoData/
 .env
-cli.js
 *.report.html
+*.log
+.yarn/
