@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "target": "es2017",
+    "target": "es2018",
     "module": "commonjs",
     "sourceMap": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "lib": ["es2018", "esnext.asynciterable"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "include": ["src/**/*"],
   "exclude": [".yarn", "**/*.spec.ts"]
