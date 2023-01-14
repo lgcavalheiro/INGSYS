@@ -35,6 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["class-validator", "npm:0.14.0"],\
             ["graphql", "npm:15.8.0"],\
             ["graphql-helix", "virtual:4e22a776e8d0b0c9dc39b1106c5aca95b8421023668b5b8ebf402f28748337ccb718a32d20e68fbb76009c227416617109794e3b4975ba7bc4a8f0ec0e1a7a88#npm:1.13.0"],\
+            ["husky", "npm:8.0.3"],\
             ["jest", "virtual:4e22a776e8d0b0c9dc39b1106c5aca95b8421023668b5b8ebf402f28748337ccb718a32d20e68fbb76009c227416617109794e3b4975ba7bc4a8f0ec0e1a7a88#npm:29.3.1"],\
             ["koa", "npm:2.14.1"],\
             ["koa-bodyparser", "npm:4.3.0"],\
@@ -3151,6 +3152,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["husky", [\
+        ["npm:8.0.3", {\
+          "packageLocation": "./.yarn/cache/husky-npm-8.0.3-b0b59c5127-837bc7e441.zip/node_modules/husky/",\
+          "packageDependencies": [\
+            ["husky", "npm:8.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["iconv-lite", [\
         ["npm:0.4.24", {\
           "packageLocation": "./.yarn/cache/iconv-lite-npm-0.4.24-c5c4ac6695-bd9f120f5a.zip/node_modules/iconv-lite/",\
@@ -3239,6 +3249,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["class-validator", "npm:0.14.0"],\
             ["graphql", "npm:15.8.0"],\
             ["graphql-helix", "virtual:4e22a776e8d0b0c9dc39b1106c5aca95b8421023668b5b8ebf402f28748337ccb718a32d20e68fbb76009c227416617109794e3b4975ba7bc4a8f0ec0e1a7a88#npm:1.13.0"],\
+            ["husky", "npm:8.0.3"],\
             ["jest", "virtual:4e22a776e8d0b0c9dc39b1106c5aca95b8421023668b5b8ebf402f28748337ccb718a32d20e68fbb76009c227416617109794e3b4975ba7bc4a8f0ec0e1a7a88#npm:29.3.1"],\
             ["koa", "npm:2.14.1"],\
             ["koa-bodyparser", "npm:4.3.0"],\

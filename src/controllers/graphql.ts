@@ -20,7 +20,7 @@ declare module "koa" {
 class GraphQLController {
   private schema: GraphQLSchema;
 
-  constructor(private resolvers: NonEmptyArray<Function>) {
+  constructor(private resolvers: NonEmptyArray<() => any>) {
     buildSchema({ resolvers: this.resolvers }).then(
       (schema) => (this.schema = schema)
     );
