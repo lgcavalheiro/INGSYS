@@ -4,3 +4,5 @@ mongoData/
 *.report.html
 *.log
 .yarn/
+coverage/
+dist/
