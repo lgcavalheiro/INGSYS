@@ -2,34 +2,26 @@ import Koa from "koa";
 import Router from "koa-router";
 import bodyParser from "koa-bodyparser";
 import routes from "./routes";
-import dataSource from "./dataSource";
+import { DataSource } from "typeorm";
 
-const createApp = (initDataSource = false) => {
-  const app = new Koa();
-  const router = createRouter();
+export class App extends Koa {
+  private dataSource: DataSource;
 
-  app.use(bodyParser());
-  app.use(router.routes());
+  constructor(router: Router, dataSource: DataSource, koaOpts?: object) {
+    super(koaOpts);
 
-  /* tslint:disable: no-console */
-  if (initDataSource)
-    dataSource
+    routes.forEach(({ path, methods, middleware, opts }) =>
+      router.register(path, methods, middleware, opts)
+    );
+    this.use(bodyParser());
+    this.use(router.routes());
+
+    this.dataSource = dataSource;
+    /* tslint:disable: no-console */
+    this.dataSource
       .initialize()
       .then(() => console.log("DB initialized"))
       .catch((error) => console.error(error));
-  /* tslint:enable: no-console */
-
-  return app;
-};
-
-const createRouter = () => {
-  const router = new Router();
-
-  routes.forEach(({ path, methods, middleware, opts }) =>
-    router.register(path, methods, middleware, opts)
-  );
-
-  return router;
-};
-
-export { createApp, createRouter };
+    /* tslint:enable: no-console */
+  }
+}

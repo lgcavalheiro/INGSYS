@@ -1,7 +1,9 @@
 import "reflect-metadata";
-import { createApp } from "./app/app";
+import Router from "koa-router";
+import { App } from "./app/app";
+import dataSource from "./app/dataSource";
 
-const app = createApp(true);
+const app = new App(new Router(), dataSource);
 
 /* tslint:disable-next-line: no-console */
 app.listen(3000, () => console.log("App started"));
