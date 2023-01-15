@@ -6,3 +6,5 @@ mongoData/
 .yarn/
 coverage/
 dist/
+pgData/
+dump.txt

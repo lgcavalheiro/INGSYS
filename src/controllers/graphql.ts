@@ -1,5 +1,4 @@
 import { GraphQLSchema } from "graphql";
-import "reflect-metadata";
 import {
   getGraphQLParameters,
   processRequest,

@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { createApp } from "./app/app";
 
 const app = createApp();

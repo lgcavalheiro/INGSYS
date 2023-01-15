@@ -1,6 +1,6 @@
 import { NonEmptyArray } from "type-graphql";
-import TestResolver from "./resolver";
+import RecipeResolver from "./recipeResolver";
 
-const resolvers: NonEmptyArray<any> = [TestResolver];
+const resolvers: NonEmptyArray<any> = [RecipeResolver];
 
 export default resolvers;
