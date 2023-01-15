@@ -3,7 +3,6 @@ import {
   getGraphQLParameters,
   processRequest,
   renderGraphiQL,
-  shouldRenderGraphiQL,
   sendResult,
 } from "graphql-helix";
 import { Context } from "koa";
@@ -19,10 +18,8 @@ declare module "koa" {
 class GraphQLController {
   private schema: GraphQLSchema;
 
-  constructor(private resolvers: NonEmptyArray<() => any>) {
-    buildSchema({ resolvers: this.resolvers }).then(
-      (schema) => (this.schema = schema)
-    );
+  constructor(resolvers: NonEmptyArray<() => any>) {
+    buildSchema({ resolvers }).then((schema) => (this.schema = schema));
   }
 
   getGraphQLEndpoint() {
@@ -34,7 +31,7 @@ class GraphQLController {
         query: ctx.request.query,
       };
 
-      if (shouldRenderGraphiQL(request)) {
+      if (request.method === "GET") {
         ctx.body = renderGraphiQL();
       } else {
         const { operationName, query, variables } =

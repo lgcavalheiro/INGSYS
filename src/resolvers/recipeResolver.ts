@@ -12,32 +12,20 @@ class RecipeResolver {
   }
 
   @Query(() => [Recipe])
-  async getRecipes(): Promise<Recipe[]> {
-    const recipes = await this.recipeRepo
+  async getRecipes(
+    @Arg("name", { nullable: true }) name?: string
+  ): Promise<Recipe[]> {
+    const query = this.recipeRepo
       .createQueryBuilder("recipe")
       .innerJoinAndSelect("recipe.ingredients", "ingredients")
       .innerJoinAndSelect("ingredients.measurement", "measurement")
       .innerJoinAndSelect("ingredients.ingredient", "ingredient")
       .innerJoinAndSelect("ingredient.type", "type")
-      .orderBy("recipe.created", "DESC")
-      .getMany();
+      .orderBy("recipe.created", "DESC");
 
-    return recipes;
-  }
+    if (name) query.where({ name: ILike(`%${name}%`) });
 
-  @Query(() => [Recipe])
-  async getRecipesByName(@Arg("name") name: string): Promise<Recipe[]> {
-    const recipes = await this.recipeRepo
-      .createQueryBuilder("recipe")
-      .innerJoinAndSelect("recipe.ingredients", "ingredients")
-      .innerJoinAndSelect("ingredients.measurement", "measurement")
-      .innerJoinAndSelect("ingredients.ingredient", "ingredient")
-      .innerJoinAndSelect("ingredient.type", "type")
-      .where({ name: ILike(`%${name}%`) })
-      .orderBy("recipe.created", "DESC")
-      .getMany();
-
-    return recipes;
+    return await query.getMany();
   }
 }
 

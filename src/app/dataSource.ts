@@ -10,7 +10,7 @@ const dataSource = new DataSource({
   database: "",
   entities: modelList,
   synchronize: true,
-  logging: true,
+  logging: false,
 });
 
 export default dataSource;
