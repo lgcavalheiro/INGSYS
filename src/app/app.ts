@@ -4,7 +4,7 @@ import bodyParser from "koa-bodyparser";
 import routes from "./routes";
 import dataSource from "./dataSource";
 
-const createApp = () => {
+const createApp = (initDataSource = false) => {
   const app = new Koa();
   const router = createRouter();
 
@@ -12,10 +12,11 @@ const createApp = () => {
   app.use(router.routes());
 
   /* tslint:disable: no-console */
-  dataSource
-    .initialize()
-    .then(() => console.log("DB initialized"))
-    .catch((error) => console.error(error));
+  if (initDataSource)
+    dataSource
+      .initialize()
+      .then(() => console.log("DB initialized"))
+      .catch((error) => console.error(error));
   /* tslint:enable: no-console */
 
   return app;

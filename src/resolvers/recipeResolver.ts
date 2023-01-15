@@ -19,7 +19,7 @@ class RecipeResolver {
       .innerJoinAndSelect("ingredients.measurement", "measurement")
       .innerJoinAndSelect("ingredients.ingredient", "ingredient")
       .innerJoinAndSelect("ingredient.type", "type")
-      .orderBy("recipe.created_at", "DESC")
+      .orderBy("recipe.created", "DESC")
       .getMany();
 
     return recipes;
