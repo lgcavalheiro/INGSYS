@@ -7,6 +7,7 @@ import {
 } from "graphql-helix";
 import { Context } from "koa";
 import { buildSchema, NonEmptyArray } from "type-graphql";
+import getEnvs from "../app/envs";
 
 declare module "koa" {
   interface Request {
@@ -31,7 +32,7 @@ class GraphQLController {
         query: ctx.request.query,
       };
 
-      if (request.method === "GET") {
+      if (request.method === "GET" && getEnvs().environment !== "prod") {
         ctx.body = renderGraphiQL();
       } else {
         const { operationName, query, variables } =
