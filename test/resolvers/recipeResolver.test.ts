@@ -36,5 +36,23 @@ describe("RecipeResolver test suite", () => {
     expect(data!["getRecipes"]).toHaveLength(0);
   });
 
+  test("Should return all recipes by ingredient name", async () => {
+    const { data, errors } = await graphql(
+      schema,
+      '{ getRecipesContainingIngredient(ingredientName: "beef") { name } }'
+    );
+    expect(errors).toBeUndefined();
+    expect(data!["getRecipesContainingIngredient"]).toBeDefined();
+  });
+
+  test("Should return no recipes if ingredient name has no matches", async () => {
+    const { data, errors } = await graphql(
+      schema,
+      '{ getRecipesContainingIngredient(ingredientName: "ingredient-that-does-not-exist") { name } }'
+    );
+    expect(errors).toBeUndefined();
+    expect(data!["getRecipesContainingIngredient"]).toHaveLength(0);
+  });
+
   afterAll(async () => await dataSource.destroy());
 });

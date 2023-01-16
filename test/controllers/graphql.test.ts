@@ -3,6 +3,7 @@ import Router from "koa-router";
 import { App } from "./../../src/app/app";
 import { describe, expect, test, beforeAll } from "@jest/globals";
 import request from "supertest";
+import routes from "../../src/app/routes";
 
 describe("GraphQL controller test suite", () => {
   let app: App;
@@ -11,7 +12,11 @@ describe("GraphQL controller test suite", () => {
   };
 
   beforeAll(() => {
-    app = new App(new Router(), fakeDataSource as unknown as DataSource);
+    const router = new Router();
+    routes.forEach(({ path, methods, middleware, opts }) =>
+      router.register(path, methods, middleware, opts)
+    );
+    app = new App(router, fakeDataSource as unknown as DataSource);
   });
 
   test("Should provide the graphql endpoint GET", async () => {

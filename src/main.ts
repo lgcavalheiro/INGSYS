@@ -3,8 +3,14 @@ import Router from "koa-router";
 import { App } from "./app/app";
 import dataSource from "./app/dataSource";
 import getEnvs from "./app/envs";
+import routes from "./app/routes";
 
-const app = new App(new Router(), dataSource);
+const router = new Router();
+routes.forEach(({ path, methods, middleware, opts }) =>
+  router.register(path, methods, middleware, opts)
+);
+
+const app = new App(router, dataSource);
 
 app.listen(
   3000,

@@ -27,6 +27,29 @@ class RecipeResolver {
 
     return await query.getMany();
   }
+
+  @Query(() => [Recipe])
+  async getRecipesContainingIngredient(
+    @Arg("ingredientName") ingredientName: string
+  ): Promise<Recipe[]> {
+    const recipeIdSubQuery = this.recipeRepo
+      .createQueryBuilder("recipe")
+      .select("recipe.id")
+      .innerJoin("recipe.ingredients", "ingredients")
+      .innerJoin("ingredients.ingredient", "ingredient")
+      .where(`ingredient.name ILIKE '%${ingredientName}%'`)
+      .getQuery();
+
+    return await this.recipeRepo
+      .createQueryBuilder("recipe")
+      .innerJoinAndSelect("recipe.ingredients", "ingredients")
+      .innerJoinAndSelect("ingredients.measurement", "measurement")
+      .innerJoinAndSelect("ingredients.ingredient", "ingredient")
+      .innerJoinAndSelect("ingredient.type", "type")
+      .where(`recipe.id IN (${recipeIdSubQuery})`)
+      .orderBy("recipe.created", "DESC")
+      .getMany();
+  }
 }
 
 export default RecipeResolver;
