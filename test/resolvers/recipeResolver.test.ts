@@ -54,5 +54,23 @@ describe("RecipeResolver test suite", () => {
     expect(data!["getRecipesContainingIngredient"]).toHaveLength(0);
   });
 
+  test("Should return all recipes by ingredient type", async () => {
+    const { data, errors } = await graphql(
+      schema,
+      '{ getRecipesContainingIngredientType(ingredientType: "pasta") { name } }'
+    );
+    expect(errors).toBeUndefined();
+    expect(data!["getRecipesContainingIngredientType"]).toBeDefined();
+  });
+
+  test("Should return no recipes if ingredient type has no matches", async () => {
+    const { data, errors } = await graphql(
+      schema,
+      '{ getRecipesContainingIngredientType(ingredientType: "invalid-ingredient-type") { name } }'
+    );
+    expect(errors).toBeUndefined();
+    expect(data!["getRecipesContainingIngredientType"]).toHaveLength(0);
+  });
+
   afterAll(async () => await dataSource.destroy());
 });

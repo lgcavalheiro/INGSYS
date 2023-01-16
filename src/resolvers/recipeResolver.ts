@@ -50,6 +50,30 @@ class RecipeResolver {
       .orderBy("recipe.created", "DESC")
       .getMany();
   }
+
+  @Query(() => [Recipe])
+  async getRecipesContainingIngredientType(
+    @Arg("ingredientType") ingredientType: string
+  ): Promise<Recipe[]> {
+    const recipeIdSubQuery = this.recipeRepo
+      .createQueryBuilder("recipe")
+      .select("recipe.id")
+      .innerJoin("recipe.ingredients", "ingredients")
+      .innerJoin("ingredients.ingredient", "ingredient")
+      .innerJoin("ingredient.type", "type")
+      .where(`type.name ILIKE '${ingredientType}'`)
+      .getQuery();
+
+    return await this.recipeRepo
+      .createQueryBuilder("recipe")
+      .innerJoinAndSelect("recipe.ingredients", "ingredients")
+      .innerJoinAndSelect("ingredients.measurement", "measurement")
+      .innerJoinAndSelect("ingredients.ingredient", "ingredient")
+      .innerJoinAndSelect("ingredient.type", "type")
+      .where(`recipe.id IN (${recipeIdSubQuery})`)
+      .orderBy("recipe.created", "DESC")
+      .getMany();
+  }
 }
 
 export default RecipeResolver;
