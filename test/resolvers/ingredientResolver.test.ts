@@ -15,7 +15,7 @@ describe("IngredientResolver test suite", () => {
   test("Should return all ingredients", async () => {
     const { data, errors } = await graphql(
       schema,
-      "{ getIngredients { id name } }"
+      "{ getIngredients { name } }"
     );
     expect(errors).toBeUndefined();
     expect(data!["getIngredients"]).toBeDefined();
@@ -24,7 +24,7 @@ describe("IngredientResolver test suite", () => {
   test("Should be able to search ingredients by name", async () => {
     const { data, errors } = await graphql(
       schema,
-      '{ getIngredientsByName(name: "beef") { id name } }'
+      '{ getIngredientsByName(name: "dry") { name } }'
     );
     expect(errors).toBeUndefined();
     expect(data!["getIngredientsByName"]).toBeDefined();
@@ -33,7 +33,7 @@ describe("IngredientResolver test suite", () => {
   test("Should return empty array if no ingredient is found", async () => {
     const { data, errors } = await graphql(
       schema,
-      '{ getIngredientsByName(name: "ingredient-that-does-not-exist") { id name } }'
+      '{ getIngredientsByName(name: "ingredient-that-does-not-exist") { name } }'
     );
     expect(errors).toBeUndefined();
     expect(data!["getIngredientsByName"]).toHaveLength(0);

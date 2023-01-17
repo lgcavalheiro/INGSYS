@@ -1,19 +1,16 @@
 import BaseModel from "./baseModel";
 import RecipeIngredient from "./recipeIngredient";
-import { Entity, Column, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 
 @ObjectType()
 @Entity()
 export default class Recipe extends BaseModel {
   @Field(() => String)
-  @Column({ length: 64, nullable: false, unique: true })
+  @Column({ length: 64, nullable: false })
   name: string;
 
   @Field(() => [RecipeIngredient])
-  @ManyToMany(() => RecipeIngredient, (ingredient) => ingredient.recipes, {
-    cascade: true,
-  })
-  @JoinTable()
+  @Column(() => RecipeIngredient)
   ingredients: RecipeIngredient[];
 }

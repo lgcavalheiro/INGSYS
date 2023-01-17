@@ -12,6 +12,7 @@ const dataSource = new DataSource({
   password: pass,
   database: db,
   entities: modelList,
+  authSource: "admin",
   synchronize: true,
   logging: false,
 });

@@ -1,14 +1,14 @@
 import { Arg, Query, Resolver } from "type-graphql";
-import { ILike, Repository } from "typeorm";
+import { MongoRepository } from "typeorm";
 import dataSource from "../app/dataSource";
 import Ingredient from "../models/ingredient";
 
 @Resolver()
 class IngredientResolver {
-  private ingredientRepo: Repository<Ingredient>;
+  private ingredientRepo: MongoRepository<Ingredient>;
 
   constructor() {
-    this.ingredientRepo = dataSource.getRepository(Ingredient);
+    this.ingredientRepo = dataSource.getMongoRepository(Ingredient);
   }
 
   @Query(() => [Ingredient])
@@ -19,7 +19,7 @@ class IngredientResolver {
   @Query(() => [Ingredient])
   async getIngredientsByName(@Arg("name") name: string): Promise<Ingredient[]> {
     return await this.ingredientRepo.findBy({
-      name: ILike(`'%${name}%'`),
+      name: new RegExp(name, "gi"),
     });
   }
 }

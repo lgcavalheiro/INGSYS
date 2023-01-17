@@ -15,7 +15,7 @@ describe("IngredientTypeResolver test suite", () => {
   test("Should return all ingredient types", async () => {
     const { data, errors } = await graphql(
       schema,
-      "{ getIngredientTypes { id name } }"
+      "{ getIngredientTypes { name } }"
     );
     expect(errors).toBeUndefined();
     expect(data!["getIngredientTypes"]).toBeDefined();

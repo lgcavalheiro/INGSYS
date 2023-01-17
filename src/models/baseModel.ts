@@ -1,15 +1,16 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import {
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ObjectIdColumn,
+  ObjectID,
 } from "typeorm";
 
 @ObjectType()
 export default class BaseModel {
   @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ObjectIdColumn({ name: "_id" })
+  _id: ObjectID;
 
   @Field(() => Date)
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })

@@ -1,14 +1,14 @@
 import { Query, Resolver } from "type-graphql";
-import { Repository } from "typeorm";
+import { MongoRepository } from "typeorm";
 import dataSource from "../app/dataSource";
 import IngredientType from "../models/ingredientType";
 
 @Resolver()
 class IngredientTypeResolver {
-  private ingredientTypeRepo: Repository<IngredientType>;
+  private ingredientTypeRepo: MongoRepository<IngredientType>;
 
   constructor() {
-    this.ingredientTypeRepo = dataSource.getRepository(IngredientType);
+    this.ingredientTypeRepo = dataSource.getMongoRepository(IngredientType);
   }
 
   @Query(() => [IngredientType])

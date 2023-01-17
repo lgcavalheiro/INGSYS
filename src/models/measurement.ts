@@ -1,20 +1,13 @@
 import { Field, ObjectType } from "type-graphql";
-import BaseModel from "./baseModel";
-import { Entity, Column, OneToMany } from "typeorm";
-import RecipeIngredient from "./recipeIngredient";
+import { Column } from "typeorm";
 
 @ObjectType()
-@Entity()
-export default class Measurement extends BaseModel {
+export default class Measurement {
   @Field(() => String)
-  @Column({ length: 16, nullable: false })
+  @Column()
   type: string;
 
   @Field(() => Number)
-  @Column({ type: "float", nullable: false })
+  @Column()
   quantity: number;
-
-  @Field(() => RecipeIngredient)
-  @OneToMany(() => RecipeIngredient, (recipeIngredient) => recipeIngredient.id)
-  recipeIngredientId: RecipeIngredient;
 }

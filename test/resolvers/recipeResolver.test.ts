@@ -21,7 +21,7 @@ describe("RecipeResolver test suite", () => {
   test("Should return all recipes searching by name", async () => {
     const { data, errors } = await graphql(
       schema,
-      '{ getRecipes(name: "nes") { name } }'
+      '{ getRecipes(name: "recipe") { name } }'
     );
     expect(errors).toBeUndefined();
     expect(data!["getRecipes"]).toBeDefined();
@@ -39,7 +39,7 @@ describe("RecipeResolver test suite", () => {
   test("Should return all recipes by ingredient name", async () => {
     const { data, errors } = await graphql(
       schema,
-      '{ getRecipesContainingIngredient(ingredientName: "beef") { name } }'
+      '{ getRecipesContainingIngredient(ingredientName: "dry") { name } }'
     );
     expect(errors).toBeUndefined();
     expect(data!["getRecipesContainingIngredient"]).toBeDefined();
