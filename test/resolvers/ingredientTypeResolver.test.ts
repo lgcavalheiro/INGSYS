@@ -1,15 +1,12 @@
-import { describe, expect, test, beforeAll, afterAll } from "@jest/globals";
+import { afterAll, beforeAll, describe, expect, test } from "@jest/globals";
 import { graphql, GraphQLSchema } from "graphql";
-import { buildSchema } from "type-graphql";
-import resolvers from "../../src/resolvers/index";
-import dataSource from "../../src/app/dataSource";
+import { setup, teardown } from "../utils";
 
 describe("IngredientTypeResolver test suite", () => {
   let schema: GraphQLSchema;
 
   beforeAll(async () => {
-    await dataSource.initialize();
-    schema = await buildSchema({ resolvers });
+    schema = await setup();
   });
 
   test("Should return all ingredient types", async () => {
@@ -21,5 +18,28 @@ describe("IngredientTypeResolver test suite", () => {
     expect(data!["getIngredientTypes"]).toBeDefined();
   });
 
-  afterAll(async () => await dataSource.destroy());
+  test("Should create a new ingredient type", async () => {
+    const name = "test ingredient";
+    const description = "test description";
+
+    const { data, errors } = await graphql(
+      schema,
+      `
+        mutation addIngredientType {
+          addIngredientType(data: { name: "${name}", description: "${description}" }) {
+            _id
+            name
+            description
+          }
+        }
+      `
+    );
+
+    expect(errors).toBeUndefined();
+    expect(data!["addIngredientType"]["_id"]).toBeDefined();
+    expect(data!["addIngredientType"]["name"]).toBe(name);
+    expect(data!["addIngredientType"]["description"]).toBe(description);
+  });
+
+  afterAll(async () => await teardown());
 });

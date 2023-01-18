@@ -1,15 +1,12 @@
 import { describe, expect, test, beforeAll, afterAll } from "@jest/globals";
 import { graphql, GraphQLSchema } from "graphql";
-import { buildSchema } from "type-graphql";
-import resolvers from "../../src/resolvers/index";
-import dataSource from "../../src/app/dataSource";
+import { setup, teardown } from "../utils";
 
 describe("RecipeResolver test suite", () => {
   let schema: GraphQLSchema;
 
   beforeAll(async () => {
-    await dataSource.initialize();
-    schema = await buildSchema({ resolvers });
+    schema = await setup();
   });
 
   test("Should return all recipes", async () => {
@@ -72,5 +69,5 @@ describe("RecipeResolver test suite", () => {
     expect(data!["getRecipesContainingIngredientType"]).toHaveLength(0);
   });
 
-  afterAll(async () => await dataSource.destroy());
+  afterAll(async () => await teardown());
 });

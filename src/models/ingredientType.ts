@@ -5,8 +5,14 @@ import BaseModel from "./baseModel";
 @ObjectType()
 @Entity()
 export default class IngredientType extends BaseModel {
+  constructor(name: string, description?: string) {
+    super();
+    this.name = name;
+    this.description = description;
+  }
+
   @Field(() => String)
-  @Column({ length: 32, nullable: false })
+  @Column({ length: 32 })
   name: string;
 
   @Field(() => String, { nullable: true })

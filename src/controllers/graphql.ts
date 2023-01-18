@@ -1,4 +1,4 @@
-import { GraphQLSchema } from "graphql";
+import { ExecutionResult, GraphQLError, GraphQLSchema } from "graphql";
 import {
   getGraphQLParameters,
   processRequest,
@@ -16,11 +16,39 @@ declare module "koa" {
   }
 }
 
+const formatResult = (result: ExecutionResult) => {
+  const formattedResult: ExecutionResult = {
+    data: result.data,
+  };
+
+  if (result.errors) {
+    formattedResult.errors = result.errors.map((error) => {
+      return new GraphQLError(
+        error.message,
+        error.nodes,
+        error.source,
+        error.positions,
+        error.path,
+        null,
+        {
+          timestamp: Date.now(),
+          stack: error.stack,
+          original: error.originalError,
+        }
+      );
+    });
+  }
+
+  return formattedResult;
+};
+
 class GraphQLController {
   private schema: GraphQLSchema;
 
   constructor(resolvers: NonEmptyArray<() => any>) {
-    buildSchema({ resolvers }).then((schema) => (this.schema = schema));
+    buildSchema({ resolvers, validate: { forbidUnknownValues: false } }).then(
+      (schema) => (this.schema = schema)
+    );
   }
 
   getGraphQLEndpoint() {
@@ -47,7 +75,7 @@ class GraphQLController {
         });
 
         ctx.respond = false;
-        ctx.body = sendResult(result, ctx.res);
+        ctx.body = sendResult(result, ctx.res, formatResult);
       }
     };
 
